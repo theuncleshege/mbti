@@ -18,7 +18,7 @@ class CreateAnswersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('question_id');
             $table->unsignedBigInteger('answer');
-            $table->timestamp('updated_at');
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')->on('users')
@@ -28,10 +28,6 @@ class CreateAnswersTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->unique(['user_id', 'question_id']);
-        });
-
-        Schema::table('answers', function (Blueprint $table) {
-            $table->timestamp('created_at')->useCurrent()->after('answer');
         });
     }
 
