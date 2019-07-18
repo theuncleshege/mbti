@@ -17,6 +17,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/', function(){
+    dump(config('app.env'));
+    dump(config('app.debug'));
+    dump(env('APP_ENV'));
+    dump(env('APP_DEBUG'));
+});
+
 Route::resource('users', 'UserController')->only([
     'index', 'store', 'show'
 ]);
@@ -24,4 +31,8 @@ Route::resource('users', 'UserController')->only([
 Route::resource('questions', 'QuestionController')->only([
     'index'
 ]);
+
+Route::get('/info', function(){
+    phpinfo();
+});
 

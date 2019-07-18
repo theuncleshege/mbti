@@ -1,0 +1,20 @@
+FROM node
+
+RUN apt update \
+    && apt install -y ca-certificates apt-transport-https curl \
+    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt update \
+    && apt install -y yarn
+
+WORKDIR /var/www/html
+
+COPY ./package.json ./yarn.lock ./
+
+RUN yarn
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["yarn", "start"]
