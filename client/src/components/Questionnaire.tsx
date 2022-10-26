@@ -20,24 +20,10 @@ import { TextField } from 'formik-material-ui';
 import { API_URI, getAxiosError } from "../constants";
 import { Loader } from './common';
 
-const DisplayFormikState = (props: any) =>
-<div style={{ margin: '1rem 0' }}>
-  <h3 style={{ fontFamily: 'monospace' }} />
-  <pre
-    style={{
-      background: '#f6f8fa',
-      fontSize: '.65rem',
-      padding: '.5rem',
-    }}
-  >
-    <strong>props</strong> ={' '}
-    {JSON.stringify(props, null, 2)}
-  </pre>
-</div>;
-
 const variantIcon = {
   error: ErrorIcon
 };
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -287,7 +273,7 @@ const Questionnaire: React.FC = (props: any) => {
                   );
                   props.history.push(`/results/${response.data['id']}`)
                 } catch(error) {
-                  setError(getAxiosError);
+                  setError(getAxiosError(error));
                   setOpen(true);
                   setSubmitting(false);
                 }
@@ -361,8 +347,6 @@ const Questionnaire: React.FC = (props: any) => {
                           </Button>
                         </Grid>
                       </Box>
-
-                      <DisplayFormikState {...props} />
                     </>
                   }
                   </form>
