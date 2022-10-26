@@ -17,11 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('email')->unique();
             $table->string('mbti');
-            $table->timestamp('updated_at');
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->timestamp('created_at')->useCurrent()->after('mbti');
+            $table->timestamps();
         });
     }
 

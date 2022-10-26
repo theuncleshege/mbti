@@ -19,12 +19,8 @@ class CreateQuestionsTable extends Migration
             $table->string('slug');
             $table->string('dimension');
             $table->integer('direction');
-//            $table->string('meaning')->nullable();
-            $table->timestamp('updated_at');
-        });
-
-        Schema::table('questions', function (Blueprint $table) {
-            $table->timestamp('created_at')->useCurrent()->after('direction');
+//            $table->string('meaning');
+            $table->timestamps();
         });
     }
 
