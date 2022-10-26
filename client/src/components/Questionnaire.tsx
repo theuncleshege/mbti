@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Radio, Box, Container, Button } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
+import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -21,7 +22,8 @@ import { API_URI, getAxiosError } from "../constants";
 import { Loader } from './common';
 
 const variantIcon = {
-  error: ErrorIcon
+  error: ErrorIcon,
+  info: InfoIcon,
 };
 
 
@@ -61,6 +63,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const snackbarStyles = makeStyles((theme: Theme) => ({
   error: {
     backgroundColor: theme.palette.error.dark,
+  },
+  info: {
+    backgroundColor: theme.palette.secondary.dark,
   },
   icon: {
     fontSize: 20,
@@ -294,7 +299,7 @@ const Questionnaire: React.FC = (props: any) => {
                 return (
                   <form onSubmit={handleSubmit}>
                     {
-                      questions.length > 0 &&
+                      questions.length > 0 ?
                       <>
                         {
                           questions.map(value => (
@@ -348,6 +353,20 @@ const Questionnaire: React.FC = (props: any) => {
                         </Grid>
                       </Box>
                     </>
+                    :
+                    <Snackbar
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                      }}
+                      open
+                    >
+                      <MySnackbarContentWrapper
+                        variant="info"
+                        message="No questions available"
+                        classes={snackbarClasses}
+                      />
+                    </Snackbar>
                   }
                   </form>
                 );
