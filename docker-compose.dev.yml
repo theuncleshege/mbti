@@ -1,0 +1,52 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - dbdata_dev:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=mbti
+      - MYSQL_USER=mbti
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_PASSWORD=password
+    ports:
+      - '3307:3306'
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8080:80
+    volumes:
+      - ./api:/var/www/html
+      - /var/www/html/vendor
+      - /var/www/html/node_modules
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=mbti
+      - DB_USERNAME=mbti
+      - DB_PASSWORD=password
+      - APP_DEBUG=true
+  client:
+    ports:
+      - 3000:3000
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /var/www/html/node_modules
+      - ./client:/var/www/html
+    environment:
+      REACT_APP_CONTAINER: Docker
+  webserver:
+    restart: always
+    build:
+      context: ./webserver
+      dockerfile: Dockerfile.dev
+    ports:
+      - "80:80"
+
+volumes:
+  dbdata_dev:
+    driver: local

@@ -1,0 +1,33 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=mbti
+      - MYSQL_USER=mbti
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_PASSWORD=password
+  api:
+    build:
+      context: ./api
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=mbti
+      - DB_USERNAME=mbti
+      - DB_PASSWORD=password
+      - APP_DEBUG=false
+  client:
+    build:
+      context: ./client
+  webserver:
+    build:
+      context: ./webserver
+    ports:
+      - "80:80"
+
+volumes:
+  dbdata:
+    driver: local

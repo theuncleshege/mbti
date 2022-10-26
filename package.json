@@ -1,0 +1,18 @@
+{
+  "name": "mbti",
+  "version": "1.0.0",
+  "description": "Simple Myers-Briggs Type Indicator Perspective Test",
+  "repository": "https://github.com/theuncleshege/mbti",
+  "author": "Segun Ojo <theuncleshege@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "seed": "docker-compose exec api bash scripts/seed.sh",
+    "prestart": "yarn reset",
+    "start": "docker-compose up -d --build",
+    "poststart": "yarn seed",
+    "dev": "docker-compose -f docker-compose.dev.yml up -d --build",
+    "test": "docker-compose exec api vendor/bin/phpunit && docker-compose exec client yarn test --watchAll=false",
+    "stop": "docker-compose down",
+    "reset": "yarn stop && docker volume rm -f mbti_dbdata && docker volume rm -f mbti_dbdata_dev"
+  }
+}
